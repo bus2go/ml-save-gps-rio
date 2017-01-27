@@ -1,6 +1,6 @@
 {
   "name": "ml-save-gps-rio",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Get GPS data from Rio de Janeiro's municipal bus transport system.",
   "main": "index.js",
   "scripts": {
