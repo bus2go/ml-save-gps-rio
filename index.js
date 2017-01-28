@@ -45,10 +45,14 @@ let getGPS = () => {
             if(res.statusCode !== 200) {
                 console.log('res.statusCode', res.statusCode);
             } else {
-                var data = JSON.parse(body);
-                console.log('>>> inicio', counter++, new Date());
-                
-                parseData(FILE_PATH, data.DATA);
+                try {
+                    let data = JSON.parse(body);
+                    console.log('>>> inicio', counter++, new Date());
+                    
+                    parseData(FILE_PATH, data.DATA);
+                } catch(err) {
+                    console.log('err', err);
+                }
             }
         });
     }).on('error', err => {
