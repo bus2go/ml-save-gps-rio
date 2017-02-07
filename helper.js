@@ -1,5 +1,9 @@
 const fs = require('fs');
 
+const TIME_ZONE_DIFFERENCE = -2;
+
+let streams = {};
+
 const zeros = (value, size) => {
     value += '';
     
@@ -14,12 +18,11 @@ const writeLine = (file, id, key, item) => {
 };
 
 const write = (file, data) => {
-    fs.appendFile(file, data, err => {
-        if(err) {
-            console.log(err);
-            throw err;
-        }
-    });
+    if(!streams[file]) streams[file] = fs.createWriteStream(file, {'flags': 'a'});
+    
+    let stream = streams[file];
+    
+    stream.write(data);
 };
 
 const writeHeader = (file, header) => {
@@ -28,6 +31,7 @@ const writeHeader = (file, header) => {
 
 const getFileName = (city) => {
     let date = new Date();
+    date.setHours(date.getHours() + TIME_ZONE_DIFFERENCE);
     
     let result = city + '_' + zeros(date.getFullYear(), 4) + '-';
     result += zeros(date.getMonth()+1, 2) + '-';
